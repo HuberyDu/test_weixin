@@ -9,7 +9,7 @@ class WeixinsController < ApplicationController
 
   def create
     if params[:xml][:MsgType] == "text"
-      @content = "我是回音：" + "params[:xml][:Content]"
+      @content = "我是回音：" + params[:xml][:Content]
     elsif params[:xml][:MsgType] == "event" and params[:xml][:Event] == "subscribe"
       @content = "感谢您的关注"
     end

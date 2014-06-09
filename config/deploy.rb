@@ -9,7 +9,7 @@ role :web, location                       # Your HTTP server, Apache/etc
 role :app, location                       # This may be the same as your `Web` server
 #server details
 default_run_options[:pty] = true  # Must be set for the password prompt
-set :deploy_to, "/var/apps/wx/public/"  #部署在服务器上的地址
+set :deploy_to, "/var/apps/wx/"  #部署在服务器上的地址
 
 set :user, "bhqa" #ssh连接服务器的帐号
 set :use_sudo, false

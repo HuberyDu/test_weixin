@@ -9,9 +9,11 @@ class WeixinsController < ApplicationController
 
   def create
     if params[:xml][:MsgType] == "text"
-      @content = "text"
-      render "echo", :formats => :xml
+      @content = "我是回音：" + "params[:xml][:Content]"
+    elsif params[:xml][:MsgType] == "event" and params[:xml][:Event] == "subscribe"
+      @content = "感谢您的关注"
     end
+    render "echo", :formats => :xml
   end
 
   private

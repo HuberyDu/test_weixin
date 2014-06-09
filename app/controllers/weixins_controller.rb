@@ -11,9 +11,9 @@ class WeixinsController < ApplicationController
     if params[:xml][:MsgType] == "text"
       @cotent = "text"
       render "text", :formats => :xml
-    elsif params[:xml][:MsgType] == "subscribe"
-      @content = '感谢您的关注'
-      render "text", :formats => :xml
+    # elsif params[:xml][:MsgType] == "subscribe"
+    #   @content = '感谢您的关注'
+    #   render "text", :formats => :xml
     end
   end
 

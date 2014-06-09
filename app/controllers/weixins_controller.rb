@@ -9,13 +9,8 @@ class WeixinsController < ApplicationController
 
   def create
     if params[:xml][:MsgType] == "text"
-      case params[:xml][:Content]
-      when "text"
-        @cotent = "text"
-        render "text", :formats => :xml
-      when 'image'
-        render "image", :formats => :xml
-      end
+      @cotent = "text"
+      render "text", :formats => :xml
     elsif params[:xml][:MsgType] == "subscribe"
       @content = '感谢您的关注'
       render "text", :formats => :xml

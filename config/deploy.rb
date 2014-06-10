@@ -3,7 +3,7 @@ require 'bundler/capistrano'  # 支持自动bundler
 set :rvm_autolibs_flag, "read-only"        # more info: rvm help autolibs
 
 set :application, "test_weixin" #应用的名字
-set :location, "58.246.136.2"
+set :location, "http://10.211.55.3/"
 role :web, location                       # Your HTTP server, Apache/etc
 role :app, location                       # This may be the same as your `Web` server
 #server details

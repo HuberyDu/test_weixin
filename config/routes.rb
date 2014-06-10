@@ -1,7 +1,15 @@
 # -*- encoding : utf-8 -*-
 TestWeixin::Application.routes.draw do
-  resource :weixin
-  # The priority is based upon order of creation:
+  resource :weixin do
+    member do
+      get :add_menu
+    end
+    member do
+      post :create_menu
+    end
+  end
+
+  # The priority is based upon order of creation: 
   # first created -> highest priority.
 
   # Sample of regular route:

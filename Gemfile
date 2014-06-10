@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'https://ruby.taobao.org/'
 
 gem 'rails', '3.2.11'
 
@@ -11,6 +11,8 @@ gem 'capistrano', '~> 2.15.1'
 # Gems used only for assets and not required
 # in production environments by default.
 gem "therubyracer"
+gem "haml-rails"
+gem "sqlite3"
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -22,6 +24,10 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :development do
+  gem "pry-nav"
+  gem "pry"
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

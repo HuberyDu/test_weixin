@@ -3,9 +3,9 @@ require 'bundler/capistrano'  # 支持自动bundler
 set :rvm_autolibs_flag, "read-only"        # more info: rvm help autolibs
 
 set :application, "test_weixin" #应用的名字
-set :location, "http://10.211.55.3/"
-role :web, location                       # Your HTTP server, Apache/etc
-role :app, location                       # This may be the same as your `Web` server
+set :domain, "wx.ejianfei.com"
+role :web, "wx.ejianfei.com"                       # Your HTTP server, Apache/etc
+role :app, "wx.ejianfei.com"                       # This may be the same as your `Web` server
 #server details
 set :deploy_to, "/var/apps/wx/"  #部署在服务器上的地址
 
@@ -26,12 +26,12 @@ namespace :deploy do
     run "cd #{current_path} && RAILS_ENV=production bundle exec unicorn_rails -c #{unicorn_config} -D"
   end
 
-  task :restart, :roles => :app do
-    run "touch #{current_path}/tmp/restart.txt"
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "if [ -f #{unicorn_pid} ]; then kill -s USR2 `cat #{unicorn_pid}`; fi"
   end
 
-  task :stop, :roles => :app do
-      #do nonthing
-  end 
+  task :stop, :roles => :app, :except => { :no_release => true } do
+    run "if [ -f #{unicorn_pid} ]; then kill -QUIT `cat #{unicorn_pid}`; fi"
+  end
 end
 

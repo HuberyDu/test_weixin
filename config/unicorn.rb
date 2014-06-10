@@ -1,9 +1,11 @@
 require 'unicorn'
 
-working_directory "/home/duxiaolong/test_weixin"
-pid "/home/duxiaolong/test_weixin" + "/tmp/pids/unicorn.pid"
-stderr_path "/home/duxiaolong/test_weixin" + "/log/unicorn.log"
-stdout_path "/home/duxiaolong/test_weixin" + "/log/unicorn.log"
+app_root = File.expand_path("../..", __FILE__)
+
+working_directory "#{app_root}"
+pid "#{app_root}" + "/tmp/pids/unicorn.pid"
+stderr_path "#{app_root}" + "/log/unicorn.log"
+stdout_path "#{app_root}" + "/log/unicorn.log"
 
 listen "/tmp/unicorn.test_weixin.sock"
 worker_processes 2

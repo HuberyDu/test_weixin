@@ -18,18 +18,11 @@ class WeixinsController < ApplicationController
 
   def create_menu
     main_menu = Array.new
-    params.each do |name, value|
-      i ||= 1
-      temp_menu = Array.new
-      if name == "main_menu_" + "#{i.to_s}"
-        temp_menu = ({type: "view", name: value, url:"www.baidu.com"})
-      end
-      main_menu.push(temp_menu)
-    end
-    @menu = Hash.new
-    @menu["buttons"] = main_menu
-    getToken
-    doPost
+    init_data
+    get_access_token
+    do_post(@menu, @access_token)
+    render json: @menu.to_json
+    binding.pry
   end
 
   private
@@ -39,7 +32,7 @@ class WeixinsController < ApplicationController
     render :text => "Forbidden", :status => 403 if params[:signature] != Digest::SHA1.hexdigest(array.join)
   end
 
-  def getToken
+  def get_access_token
     uri = URI.parse 'https://api.weixin.qq.com/cgi-bin/token?'
     uri.query = URI.encode_www_form(grant_type: "client_credential", appid: "wxcbd762df133385fb", secret: "f0b21749f556463703f285a045cc9588")
     http = Net::HTTP.new(uri.host,uri.port)
@@ -50,16 +43,34 @@ class WeixinsController < ApplicationController
     @access_token = body["access_token"]
   end
 
-  def doPost
-    url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{@token}"
+  def do_post(data, token)
+    url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{token}"
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     request = Net::HTTP::Post.new(uri.path, {'Content-Type' =>'application/json'})
-    request.body = @menu.to_json
+    request.body = data.to_json
     response = http.request(request)
-    binding.pry
   end
 
-
+  def init_data
+    @menu = Hash.new
+    main_menu = Array.new
+    main_menu_1 = ({type: "view", name: "menu_1", url:"www.baidu.com"})
+    main_menu_2 = ({type: "click", name: "menu_2", key: "menu_2"})
+    sub_menu = Array.new
+    sub_menu[0] = ({type: "view", name: "sub_menu_3_1", url:"www.baidu.com"})
+    sub_menu[1] = ({type: "click", name: "sub_menu_3_2", key:"sub_menu_3_2"})
+    sub_menu[2] = ({type: "click", name: "sub_menu_3_3", key:"sub_menu_3_3"})
+    main_menu_3 = Hash.new
+    main_menu_3= {sub_button: sub_menu, name: "caidan"}
+    main_menu.push(main_menu_1)
+    main_menu.push(main_menu_2)
+    main_menu.push(main_menu_3)
+    @menu["button"] = main_menu
+  end
 end
+
+
+
+

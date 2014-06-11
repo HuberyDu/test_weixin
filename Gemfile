@@ -13,6 +13,7 @@ gem 'capistrano', '~> 2.15.1'
 gem "therubyracer"
 gem "haml-rails"
 gem "sqlite3"
+gem 'rest_client'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

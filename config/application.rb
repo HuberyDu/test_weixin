@@ -64,5 +64,7 @@ module TestWeixin
 
     # 微信 API token
     config.weixin_token = "echotest"
+    config.weixin_appid = "wxcbd762df133385fb"
+    config.weixin_secret = "f0b21749f556463703f285a045cc9588"
   end
 end

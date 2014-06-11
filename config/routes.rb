@@ -3,9 +3,7 @@ TestWeixin::Application.routes.draw do
   resource :weixin do
     member do
       get :add_menu
-    end
-    member do
-      post :create_menu
+      get :init_menu
     end
   end
 

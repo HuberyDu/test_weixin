@@ -12,7 +12,7 @@ gem 'capistrano', '~> 2.15.1'
 # in production environments by default.
 gem "therubyracer"
 gem "haml-rails"
-gem  "sqlite3", '~> 1.3.9'
+gem "sqlite3", '~> 1.3.9'
 gem 'rest_client'
 
 group :assets do

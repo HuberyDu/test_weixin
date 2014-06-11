@@ -9,20 +9,36 @@ class WeixinsController < ApplicationController
 
   def create
     if params[:xml][:MsgType] == "text"
-      @content = "我是回音：" + params[:xml][:Content]
-    elsif params[:xml][:MsgType] == "event" and params[:xml][:Event] == "subscribe"
-      @content = "感谢您的关注"
+    elsif 
     end
     render "echo", :formats => :xml
   end
 
+  def text_message
+    @content = "我是回音：" + params[:xml][:Content]
+    render "text", :formats => :xml
+  end
+
+  def subscribe_message
+    @content = "感谢您的关注"
+    render "text", :formats => :xml
+  end
+
+  def image_message
+    render "image", :formats => :xml
+  end
+
+  def click_menu_message
+    @content = params[:xml][:EventKey]
+    render "text"
+  end
+
   def create_menu
-    main_menu = Array.new
     init_data
-    get_access_token
-    do_post(@menu, @access_token)
+    access_token = get_access_token
+    response = RestClient.post "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{access_token}", 
+                                              @menu.to_json, :content_type => :json, :accept => :json
     render json: @menu.to_json
-    binding.pry
   end
 
   private
@@ -33,24 +49,14 @@ class WeixinsController < ApplicationController
   end
 
   def get_access_token
-    uri = URI.parse 'https://api.weixin.qq.com/cgi-bin/token?'
-    uri.query = URI.encode_www_form(grant_type: "client_credential", appid: "wxcbd762df133385fb", secret: "f0b21749f556463703f285a045cc9588")
-    http = Net::HTTP.new(uri.host,uri.port)
-    http.use_ssl = true
-    request = Net::HTTP::Get.new(uri.request_uri)
-    response = http.request(request)
-    body = JSON.parse response.body
-    @access_token = body["access_token"]
-  end
-
-  def do_post(data, token)
-    url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{token}"
-    uri = URI.parse(url)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    request = Net::HTTP::Post.new(uri.path, {'Content-Type' =>'application/json'})
-    request.body = data.to_json
-    response = http.request(request)
+    if Rails.cache.read("access_token").nil? 
+      params = {grant_type: "client_credential", appid: "wxcbd762df133385fb", secret: "f0b21749f556463703f285a045cc9588"}
+      response = RestClient.get 'https://api.weixin.qq.com/cgi-bin/token', {params: params}
+      access_token = (JSON.parse response)["access_token"]
+      Rails.cache.write('access_token', access_token, :expires_in => 7200.seconds)
+    else
+      Rails.cache.read("access_token")
+    end
   end
 
   def init_data

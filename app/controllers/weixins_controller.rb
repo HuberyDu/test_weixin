@@ -33,7 +33,8 @@ class WeixinsController < ApplicationController
     render "text"
   end
 
-  def create_menu
+  def init_menu
+    WeixinMenu.init menu
     init_data
     access_token = get_access_token
     response = RestClient.post "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{access_token}", 

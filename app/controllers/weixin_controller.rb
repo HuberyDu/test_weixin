@@ -1,15 +1,24 @@
 # -*- encoding : utf-8 -*-
 class WeixinController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  before_filter :check_weixin_legality, only: :show
+  skip_before_filter :check_weixin_legality, only: [:init_menu]
   http_basic_authenticate_with name:"wx_test", password:"wx_test_secret", only: :init_menu
 
   def show
     render :text => params[:echostr]
   end
 
+  def create
+    render :text => params[:echostr]
+  end
+
   def text_message
     @content = "我是回音：" + params[:xml][:Content]
+    render "text", :formats => :xml
+  end
+
+  def default_message
+    @content = params[:xml][:Content]
     render "text", :formats => :xml
   end
 
@@ -43,7 +52,3 @@ class WeixinController < ApplicationController
   end
 
 end
-
-
-
-

@@ -1,12 +1,16 @@
 # -*- encoding : utf-8 -*-
 TestWeixin::Application.routes.draw do
-  scope :path => "/weixin", :via => :post do 
-    root :to => 'weixin#text_message', :constraints => lambda { |request| request.params[:xml][:MsgType] == 'text' }
-    root :to => 'weixin#image_message', :constraints => lambda { |request| request.params[:xml][:MsgType] == 'image' }
-    root :to => 'weixin#subscribe_message', :constraints => lambda { |request| request.params[:xml][:MsgType] == "event" and request.params[:xml][:Event] == "subscribe" }
-    root :to => 'weixin#click_menu_message', :constraints => lambda { |request| request.params[:xml][:MsgType] == "event" and request.params[:xml][:Event] == "CLICK" }
+  resources :weixin, only:[:show] do
+     collection do
+       get "init_menu"
+     end
   end
 
-  get "/weixin" => "weixin#show"
-  get "/weixin/init_menu" => "weixin#init_menu"
+  scope :path => "/weixin", :via => :post do 
+    root :to => 'weixin#text_message', :constraints => Weixin::Router.new(:type => "text")
+    root :to => 'weixin#image_message', :constraints => Weixin::Router.new(:type => "image")
+    root :to => 'weixin#subscribe_message', :constraints => Weixin::Router.new(:type => "event", :event => "CLICK")
+    root :to => 'weixin#click_menu_message', :constraints => Weixin::Router.new(:type => "event", :event => "subscribe")
+    root :to => 'weixin#create'
+  end
 end

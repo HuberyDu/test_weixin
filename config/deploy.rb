@@ -33,5 +33,8 @@ namespace :deploy do
   task :stop, :roles => :app, :except => { :no_release => true } do
     run "if [ -f #{unicorn_pid} ]; then kill -QUIT `cat #{unicorn_pid}`; fi"
   end
-end
 
+  task :precompile, :roles => :app do  
+    run "cd #{current_path} &&  rake RAILS_ENV=production assets:precompile"  
+  end 
+end

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-class WeixinsController < ApplicationController
+class WeixinController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :check_weixin_legality, only: :show
   http_basic_authenticate_with name:"wx_test", password:"wx_test_secret", only: :init_menu
@@ -29,10 +29,10 @@ class WeixinsController < ApplicationController
 
   def init_menu
     menu = WeixinMenu.init
-    access_token = get_access_token
-    response = RestClient.post "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{access_token}", 
+    response = RestClient.post "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=#{@access_token}", 
                                               menu.to_json, :content_type => :json, :accept => :json
-    render json: menu.to_json
+    errcode = (JSON.parse response)["errcode"]
+    errcode == 0 ? @message = "success" : @message = errcode
   end
 
   private

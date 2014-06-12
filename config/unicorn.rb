@@ -7,6 +7,6 @@ pid "#{app_root}" + "/tmp/pids/unicorn.pid"
 stderr_path "#{app_root}" + "/log/unicorn.log"
 stdout_path "#{app_root}" + "/log/unicorn.log"
 
-listen "/tmp/unicorn.test_weixin.sock"
+listen 3016, :tcp_nopush => false
 worker_processes 2
 timeout 30

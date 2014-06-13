@@ -33,7 +33,7 @@ class WeixinController < ApplicationController
 
   def click_menu_message
     @content = params[:xml][:EventKey]
-    render "text"
+    render "text", :formats => :xml
   end
 
   def init_menu
@@ -42,8 +42,6 @@ class WeixinController < ApplicationController
                                               menu.to_json, :content_type => :json, :accept => :json
     errcode = (JSON.parse response)["errcode"]
     errcode == 0 ? @message = "success" : @message = errcode
-a={"xml"=>{"ToUserName"=>"gh_7a15f205e8a5", "FromUserName"=>"ohsGgt83vBFg5LJzlLXUpc1u80Tc", "CreateTime"=>"1402625405", "MsgType"=>"event", "Event"=>"CLICK", "EventKey"=>"V1001_TODAY_MUSIC"}}
- render xml: a.to_xml
   end
 
   private

@@ -3,7 +3,7 @@ module Weixin
   # 微信内部路由规则类，用于简化配置
   class Router
     def initialize(options)
-      @message_type = options[:type] if options[:message_type]
+      @message_type = options[:type] if options[:type]
       @event = options[:event] if options[:event]
       @event_key = options[:event_key] if options[:event_key]
       @content = options[:content] if options[:content]

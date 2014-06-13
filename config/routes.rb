@@ -6,8 +6,6 @@ TestWeixin::Application.routes.draw do
      end
   end
  
-  match '/weixin', via: :get, to: 'weixin#auth'
-
   scope :path => "/weixin", :via => :post do 
     root :to => 'weixin#text_message', :constraints => Weixin::Router.new(:type => "text")
     root :to => 'weixin#image_message', :constraints => Weixin::Router.new(:type => "image")

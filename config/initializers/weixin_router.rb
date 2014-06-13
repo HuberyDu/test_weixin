@@ -10,6 +10,7 @@ module Weixin
     def matches?(request)
       xml = request.params[:xml]
       result = false
+      puts "----------#{request.params}---------------"
       if xml && xml.is_a?(Hash)
         result = @type == xml[:MsgType] && @event == xml[:Event]
       end

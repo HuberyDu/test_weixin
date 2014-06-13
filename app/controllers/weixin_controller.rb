@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class WeixinController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  skip_before_filter :check_weixin_legality, only: [:init_menu]
+  before_filter :check_weixin_legality, except:[:init_menu]
   http_basic_authenticate_with name:"wx_test", password:"wx_test_secret", only: :init_menu
 
   def show
@@ -9,7 +9,7 @@ class WeixinController < ApplicationController
   end
 
   def create
-    render :text => params[:echostr]
+    render "text", :formats => :xml
   end
 
   def text_message
@@ -42,6 +42,8 @@ class WeixinController < ApplicationController
                                               menu.to_json, :content_type => :json, :accept => :json
     errcode = (JSON.parse response)["errcode"]
     errcode == 0 ? @message = "success" : @message = errcode
+a={"xml"=>{"ToUserName"=>"gh_7a15f205e8a5", "FromUserName"=>"ohsGgt83vBFg5LJzlLXUpc1u80Tc", "CreateTime"=>"1402625405", "MsgType"=>"event", "Event"=>"CLICK", "EventKey"=>"V1001_TODAY_MUSIC"}}
+ render xml: a.to_xml
   end
 
   private

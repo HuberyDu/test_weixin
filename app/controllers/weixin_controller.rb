@@ -28,6 +28,7 @@ class WeixinController < ApplicationController
   end
 
   def image_message
+    @image = "http://xiaolong.u.qiniudn.com/21.jpeg"
     render "image", :formats => :xml
   end
 

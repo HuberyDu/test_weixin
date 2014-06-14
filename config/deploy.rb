@@ -1,7 +1,6 @@
 require 'rvm/capistrano' # 支持rvm
 require 'bundler/capistrano'  # 支持自动bundler
 set :rvm_autolibs_flag, "read-only"        # more info: rvm help autolibs
-
 set :application, "test_weixin" #应用的名字
 set :domain, "wx.ejianfei.com"
 role :web, "wx.ejianfei.com"                       # Your HTTP server, Apache/etc

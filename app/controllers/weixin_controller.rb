@@ -70,6 +70,8 @@ class WeixinController < ApplicationController
     music.Title = "梦一场"
     music.Description = "那英"
     music.MusicUrl = "http://xiaolong.u.qiniudn.com/%E6%A2%A6%E4%B8%80%E5%9C%BA.mp3"
+    music.PicUrl = "http://www.sinaimg.cn/dy/slidenews/69_img/2014_24/56732_47695_607814.jpg"
+    music.ThumbMediaId = "9876786"
     message.Music = music
     message.to_xml
   end

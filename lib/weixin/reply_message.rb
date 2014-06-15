@@ -36,6 +36,7 @@ module Weixin
         xml_accessor :Description, :cdata => true
         xml_accessor :MusicUrl, :cdata => true
         xml_accessor :HQMusicUrl, :cdata => true
+        xml_accessor :ThumbMediaId, :cdata => true
     end
 
     class MusicReplyMessage < ReplyMessage

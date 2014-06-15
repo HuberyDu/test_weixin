@@ -30,7 +30,12 @@ class WeixinController < ApplicationController
   end
 
   def subscribe_message
-    @content = "感谢您的关注"
+    @content = %Q{
+      感谢你的关注
+      你可以回复：
+      新闻
+      音乐
+    }
     render "text", :formats => :xml
   end
 
@@ -66,6 +71,7 @@ class WeixinController < ApplicationController
     music.Description = "那英"
     music.MusicUrl = "http://xiaolong.u.qiniudn.com/%E6%A2%A6%E4%B8%80%E5%9C%BA.mp3"
     message.Music = music
+    message.to_xml
   end
 
   def news_reply_message

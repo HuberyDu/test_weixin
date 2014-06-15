@@ -1,4 +1,5 @@
 module Weixin
+
 	class ReplyMessage
 	    include ROXML
 	    xml_name :xml

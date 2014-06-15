@@ -13,6 +13,7 @@ gem 'capistrano', '~> 2.15.1'
 gem "therubyracer"
 gem "haml-rails"
 gem 'rest_client'
+gem 'roxml'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -24,11 +25,17 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :development do
+group :development, :test do
   gem "pry-nav"
   gem "pry"
+  gem 'sqlite3', '1.3.8'
+  gem 'rspec-rails', '2.13.1'
 end
 
+group :test do
+  gem 'selenium-webdriver', '2.35.1'
+  gem 'capybara', '2.1.0'
+end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

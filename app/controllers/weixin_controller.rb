@@ -13,8 +13,15 @@ class WeixinController < ApplicationController
   end
 
   def text_message
-    @content = "我是回音：" + params[:xml][:Content]
-    render "text", :formats => :xml
+    content = params[:xml][:Content]
+    when content
+    case "音乐"
+      render xml: music_reply_message
+    case "图片":
+     
+    case "新闻":
+      render xml: news_reply_message
+    end
   end
 
   def default_message
@@ -52,4 +59,23 @@ class WeixinController < ApplicationController
     render :text => "Forbidden", :status => 403 if params[:signature] != Digest::SHA1.hexdigest(array.join)
   end
 
+  def music_reply_message
+    message = Wenxin::MusicReplyMessage.new(params[:xml][:FromUserName], params[:xml][:ToUserName])
+    message.Title = "梦一场"
+    message.Description = "那英"
+    message.MusicUrl = "http://xiaolong.u.qiniudn.com/%E6%A2%A6%E4%B8%80%E5%9C%BA.mp3"
+    message.to_xml
+  end
+
+  def news_reply_message
+    message = Weixin::NewsReplyMessage.new(params[:xml][:FromUserName], params[:xml][:ToUserName])
+    item = Weixin::Item.new
+    item.Title = "鲁尼助攻扳平球巴神绝杀"
+    item.Url = "http://2014.sina.com.cn/news/eng/2014-06-15/06475557.shtml"
+    item.Description = "北京时间6月15日6时(巴西时间14日19时)，世界杯D组首轮第2场在马瑙斯亚马逊球场展开较量，意大利2比1力擒英格兰[微博]，与哥斯达黎加同积3分"
+    item.PicUrl = "http://www.sinaimg.cn/dy/slidenews/69_img/2014_24/56732_47695_607814.jpg"
+    message.ArticleCount = 1
+    message.Articles << item
+    message.to_xml
+  end
 end

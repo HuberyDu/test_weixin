@@ -36,6 +36,14 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
+    capybara (2.1.0)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
+    childprocess (0.5.3)
+      ffi (~> 1.0, >= 1.0.11)
     coderay (1.0.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -44,9 +52,11 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+    diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    ffi (1.9.3)
     haml (4.0.5)
       tilt
     haml-rails (0.4)
@@ -67,6 +77,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.21)
+    mini_portile (0.6.0)
     multi_json (1.5.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -76,6 +87,8 @@ GEM
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     netrc (0.7.7)
+    nokogiri (1.6.2.1)
+      mini_portile (= 0.6.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
@@ -112,6 +125,21 @@ GEM
     ref (1.0.5)
     rest_client (1.7.3)
       netrc (~> 0.7.7)
+    roxml (3.3.1)
+      activesupport (>= 2.3.0)
+      nokogiri (>= 1.3.3)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.13.1)
+    rspec-rails (2.13.1)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    rubyzip (0.9.9)
     rvm-capistrano (1.3.0)
       capistrano (>= 2.0.0)
     sass (3.2.5)
@@ -119,12 +147,18 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
+    selenium-webdriver (2.35.1)
+      childprocess (>= 0.2.5)
+      multi_json (~> 1.0)
+      rubyzip (< 1.0.0)
+      websocket (~> 1.0.4)
     slop (3.4.6)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    sqlite3 (1.3.8)
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
       ref
@@ -141,20 +175,28 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    websocket (1.0.7)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   capistrano (~> 2.15.1)
+  capybara (= 2.1.0)
   coffee-rails (~> 3.2.1)
   haml-rails
   pry
   pry-nav
   rails (= 3.2.11)
   rest_client
+  roxml
+  rspec-rails (= 2.13.1)
   rvm-capistrano
   sass-rails (~> 3.2.3)
+  selenium-webdriver (= 2.35.1)
+  sqlite3 (= 1.3.8)
   therubyracer
   uglifier (>= 1.0.3)
   unicorn

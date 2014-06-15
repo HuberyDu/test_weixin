@@ -1,4 +1,6 @@
 # -*- encoding : utf-8 -*-
+require "#{Rails.root}/lib/weixin/reply_message" 
+
 class WeixinController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :check_weixin_legality, except:[:init_menu]
@@ -14,12 +16,10 @@ class WeixinController < ApplicationController
 
   def text_message
     content = params[:xml][:Content]
-    when content
-    case "音乐"
+    case content
+    when "音乐"
       render xml: music_reply_message
-    case "图片":
-     
-    case "新闻":
+    when "新闻"
       render xml: news_reply_message
     end
   end
@@ -60,11 +60,12 @@ class WeixinController < ApplicationController
   end
 
   def music_reply_message
-    message = Wenxin::MusicReplyMessage.new(params[:xml][:FromUserName], params[:xml][:ToUserName])
-    message.Title = "梦一场"
-    message.Description = "那英"
-    message.MusicUrl = "http://xiaolong.u.qiniudn.com/%E6%A2%A6%E4%B8%80%E5%9C%BA.mp3"
-    message.to_xml
+    message = Weixin::MusicReplyMessage.new(params[:xml][:FromUserName], params[:xml][:ToUserName])
+    music = Weixin::Music.new
+    music.Title = "梦一场"
+    music.Description = "那英"
+    music.MusicUrl = "http://xiaolong.u.qiniudn.com/%E6%A2%A6%E4%B8%80%E5%9C%BA.mp3"
+    message.Music = music
   end
 
   def news_reply_message
@@ -75,7 +76,7 @@ class WeixinController < ApplicationController
     item.Description = "北京时间6月15日6时(巴西时间14日19时)，世界杯D组首轮第2场在马瑙斯亚马逊球场展开较量，意大利2比1力擒英格兰[微博]，与哥斯达黎加同积3分"
     item.PicUrl = "http://www.sinaimg.cn/dy/slidenews/69_img/2014_24/56732_47695_607814.jpg"
     message.ArticleCount = 1
-    message.Articles << item
+    message.Articles = [item]
     message.to_xml
   end
 end
